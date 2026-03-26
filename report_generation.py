@@ -50,6 +50,20 @@ def generate_report():
     plt.savefig("trend_chart.png")
     plt.close()
 
+    # Chart 3: Volume i.e. no of stocks traded per day in millions
+    date = df["date"]
+    volume = df["volume"]
+
+    plt.figure()
+    plt.title("Trading volume")
+    plt.bar(date, volume)
+    plt.xlabel('Date')
+    plt.xticks(rotation = 90)
+    plt.ylabel('Volume')
+    plt.tight_layout()
+    plt.savefig("volume_chart.png")
+    plt.close()
+
     # ---------------- CREATE PDF ----------------
 
     doc = SimpleDocTemplate("report.pdf", pagesize=letter)
@@ -94,6 +108,10 @@ def generate_report():
 
     elements.append(Paragraph("Trend Distribution:", styles["Heading2"]))
     elements.append(Image("trend_chart.png", width=400, height=200))
+    elements.append(Spacer(1, 20))
+
+    elements.append(Paragraph("Trading Volume:", styles["Heading2"]))
+    elements.append(Image("volume_chart.png", width=400, height=200))
 
     # Build PDF
     doc.build(elements)
